@@ -23,8 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
-        RunnerTheme {
+            RunnerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Text("Android Hello")
                 }
