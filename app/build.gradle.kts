@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     implementation(projects.core.presentation.designsystem)
+    implementation(projects.core.data)
     implementation(projects.auth.domain)
     implementation(projects.auth.presentation)
     implementation(projects.auth.data)
