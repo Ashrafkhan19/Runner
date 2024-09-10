@@ -15,11 +15,14 @@ import kotlinx.serialization.Serializable
 @Composable
 fun NavigationRoot(
     navController: NavHostController,
+    isLoggedIn: Boolean,
 ) {
     NavHost(
-        navController = navController, startDestination = Route.Auth
+        navController = navController,
+        startDestination = if (isLoggedIn) Route.Run else Route.Auth
     ) {
         authGraph(navController)
+        runGraph(navController)
     }
 }
 
@@ -69,9 +72,15 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                 },
             )
         }
+    }
+}
 
-        composable<Route.Run> {
-            Text("Run")
+private fun NavGraphBuilder.runGraph(navController: NavHostController) {
+    navigation<Route.Run>(
+        startDestination = Route.RunOverview,
+    ) {
+        composable<Route.RunOverview>() {
+            Text(text = "Run overview!")
         }
     }
 }
@@ -93,4 +102,7 @@ sealed interface Route {
 
     @Serializable
     data object Run : Route
+
+    @Serializable
+    data object RunOverview : Route
 }
