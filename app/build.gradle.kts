@@ -11,6 +11,9 @@ android {
 
 dependencies {
 
+    // Crypto
+    implementation(libs.androidx.security.crypto.ktx)
+
     // Coil
     implementation(libs.coil.compose)
 
