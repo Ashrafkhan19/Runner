@@ -11,6 +11,8 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.core.splashscreen)
+
     // Crypto
     implementation(libs.androidx.security.crypto.ktx)
 
@@ -36,6 +38,8 @@ dependencies {
 
     implementation(projects.core.presentation.designsystem)
     implementation(projects.core.data)
+    implementation(projects.core.domain)
+
     implementation(projects.auth.domain)
     implementation(projects.auth.presentation)
     implementation(projects.auth.data)
