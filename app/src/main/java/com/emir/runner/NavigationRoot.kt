@@ -8,56 +8,89 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.auth.presentation.intro.IntroScreenRoot
+import com.example.auth.presentation.login.LoginScreenRoot
 import com.example.auth.presentation.register.RegisterScreenRoot
+import kotlinx.serialization.Serializable
 
 @Composable
 fun NavigationRoot(
     navController: NavHostController,
 ) {
     NavHost(
-        navController = navController,
-        startDestination = "auth"
+        navController = navController, startDestination = Route.Auth
     ) {
         authGraph(navController)
     }
 }
 
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
-    navigation(
-        startDestination = "intro",
-        route = "auth"
+
+    navigation<Route.Auth>(
+        startDestination = Route.Intro,
     ) {
 
-        composable(route = "intro") {
-            IntroScreenRoot(
-                onSignUpClick = {
-                    navController.navigate("register")
-                },
-                onSignInClick = {
-                    navController.navigate("login")
-                }
-            )
+        composable<Route.Intro> {
+            IntroScreenRoot(onSignUpClick = {
+                navController.navigate(Route.Register)
+            }, onSignInClick = {
+                navController.navigate(Route.Login)
+            })
         }
-        composable(route = "register") {
-            RegisterScreenRoot(
-                onSignInClick = {
-                    navController.navigate("login") {
-                        popUpTo("register") {
+        composable<Route.Register> {
+            RegisterScreenRoot(onSignInClick = {
+                navController.navigate(Route.Login) {
+                    popUpTo(Route.Register) {
+                        inclusive = true
+                        saveState = true
+                    }
+                    restoreState = true
+                }
+            }, onSuccessfulRegistration = {
+                navController.navigate(Route.Login)
+            })
+        }
+
+        composable<Route.Login> {
+            LoginScreenRoot(
+                onLoginSuccess = {
+                    navController.navigate(Route.Run) {
+                        popUpTo<Route.Auth>()
+                    }
+                },
+                onSignUpClick = {
+                    navController.navigate(Route.Register) {
+                        popUpTo<Route.Login> {
                             inclusive = true
                             saveState = true
+
                         }
                         restoreState = true
                     }
                 },
-                onSuccessfulRegistration = {
-                    navController.navigate("login")
-                }
             )
         }
 
-        composable(route = "login") {
-
-            Text("Login")
+        composable<Route.Run> {
+            Text("Run")
         }
     }
+}
+
+@Serializable
+sealed interface Route {
+
+    @Serializable
+    data object Auth : Route
+
+    @Serializable
+    data object Intro : Route
+
+    @Serializable
+    data object Login : Route
+
+    @Serializable
+    data object Register : Route
+
+    @Serializable
+    data object Run : Route
 }
