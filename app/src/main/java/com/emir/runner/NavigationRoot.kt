@@ -1,6 +1,5 @@
 package com.emir.runner
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -10,6 +9,7 @@ import androidx.navigation.navigation
 import com.example.auth.presentation.intro.IntroScreenRoot
 import com.example.auth.presentation.login.LoginScreenRoot
 import com.example.auth.presentation.register.RegisterScreenRoot
+import com.example.run.presentation.run_overview.RunOverviewScreenRoot
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -18,8 +18,7 @@ fun NavigationRoot(
     isLoggedIn: Boolean,
 ) {
     NavHost(
-        navController = navController,
-        startDestination = if (isLoggedIn) Route.Run else Route.Auth
+        navController = navController, startDestination = if (isLoggedIn) Route.Run else Route.Auth
     ) {
         authGraph(navController)
         runGraph(navController)
@@ -79,8 +78,8 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
     navigation<Route.Run>(
         startDestination = Route.RunOverview,
     ) {
-        composable<Route.RunOverview>() {
-            Text(text = "Run overview!")
+        composable<Route.RunOverview> {
+            RunOverviewScreenRoot()
         }
     }
 }

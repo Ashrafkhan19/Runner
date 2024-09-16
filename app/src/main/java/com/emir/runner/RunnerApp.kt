@@ -4,6 +4,7 @@ import android.app.Application
 import com.emir.runner.di.appModule
 import com.example.auth.presentation.di.authViewModelModule
 import com.example.core.data.di.coreDataModule
+import com.example.run.presentation.di.runViewModelModule
 import di.authDataModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -25,7 +26,8 @@ class RunnerApp : Application() {
                 authDataModule,
                 authViewModelModule,
                 appModule,
-                coreDataModule
+                coreDataModule,
+                runViewModelModule
             )
         }
     }

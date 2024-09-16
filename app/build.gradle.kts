@@ -44,6 +44,10 @@ dependencies {
     implementation(projects.auth.presentation)
     implementation(projects.auth.data)
 
+    implementation(projects.run.presentation)
+    implementation(projects.run.data)
+    implementation(projects.run.domain)
+
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
