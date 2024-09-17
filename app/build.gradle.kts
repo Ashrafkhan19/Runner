@@ -47,6 +47,7 @@ dependencies {
     implementation(projects.run.presentation)
     implementation(projects.run.data)
     implementation(projects.run.domain)
+    implementation(projects.run.location)
 
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
