@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.example.auth.presentation.intro.IntroScreenRoot
 import com.example.auth.presentation.login.LoginScreenRoot
 import com.example.auth.presentation.register.RegisterScreenRoot
+import com.example.run.presentation.active_run.ActiveRunScreenRoot
 import com.example.run.presentation.run_overview.RunOverviewScreenRoot
 import kotlinx.serialization.Serializable
 
@@ -79,7 +80,15 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
         startDestination = Route.RunOverview,
     ) {
         composable<Route.RunOverview> {
-            RunOverviewScreenRoot()
+            RunOverviewScreenRoot(
+                onStartRunClick = {
+                    navController.navigate(Route.ActiveRun)
+                }
+            )
+        }
+
+        composable<Route.ActiveRun>() {
+            ActiveRunScreenRoot()
         }
     }
 }
@@ -104,4 +113,7 @@ sealed interface Route {
 
     @Serializable
     data object RunOverview : Route
+
+    @Serializable
+    data object ActiveRun : Route
 }
