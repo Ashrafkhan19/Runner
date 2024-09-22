@@ -10,6 +10,8 @@ android {
 dependencies {
 
     implementation(libs.timber)
+    implementation(libs.coil.compose)
+    implementation(libs.google.maps.android.compose)
 
     implementation(projects.core.domain)
     implementation(projects.run.domain)

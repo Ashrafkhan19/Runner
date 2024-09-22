@@ -3,6 +3,6 @@ package com.example.core.domain.location
 import kotlin.time.Duration
 
 data class LocationTimeStamp(
-    val location: Location,
+    val location: LocationWithAltitude,
     val durationTimeStamp: Duration
 )
