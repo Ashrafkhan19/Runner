@@ -56,7 +56,9 @@ class AndroidLocationObserver(
                 }
 
                 val request =
-                    LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, interval).build()
+                    LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, interval)
+                        //.setMinUpdateDistanceMeters(50.0f)
+                        .build()
 
                 val locationCallback = object : LocationCallback() {
                     override fun onLocationResult(result: LocationResult) {

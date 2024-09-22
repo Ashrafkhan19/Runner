@@ -46,7 +46,19 @@ class RunningTracker(
 
     init {
 
-        isTracking.flatMapLatest { isTracking ->
+        isTracking
+            .onEach { isTracking ->
+                if (!isTracking) {
+                    val newList = buildList {
+                        addAll(_runData.value.location)
+                        add(emptyList())
+                    }
+                    _runData.update {
+                        it.copy(location = newList)
+                    }
+                }
+            }
+            .flatMapLatest { isTracking ->
             if (isTracking) Timer.timeAndEmit() else emptyFlow()
         }.onEach {
             _elapsedTime.value += it
