@@ -1,15 +1,18 @@
 package com.emir.runner
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.example.auth.presentation.intro.IntroScreenRoot
 import com.example.auth.presentation.login.LoginScreenRoot
 import com.example.auth.presentation.register.RegisterScreenRoot
 import com.example.run.presentation.active_run.ActiveRunScreenRoot
+import com.example.run.presentation.active_run.service.ActiveRunService
 import com.example.run.presentation.run_overview.RunOverviewScreenRoot
 import kotlinx.serialization.Serializable
 
@@ -87,8 +90,25 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
             )
         }
 
-        composable<Route.ActiveRun>() {
-            ActiveRunScreenRoot()
+        composable<Route.ActiveRun>(
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "runner://active_run"
+                }
+            )
+        ) {
+            val context = LocalContext.current
+            ActiveRunScreenRoot(onServiceToggle = { shouldServiceRun ->
+
+                if (shouldServiceRun) {
+                    context.startService(
+                        ActiveRunService.createStartIntent(
+                            context,
+                            MainActivity::class.java
+                        )
+                    )
+                } else context.startService(ActiveRunService.createSopIntent(context))
+            })
         }
     }
 }
