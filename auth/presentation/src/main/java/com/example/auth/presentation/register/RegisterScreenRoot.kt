@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +44,7 @@ import com.example.core.presentation.designsystem.RuniqueGreen
 import com.example.core.presentation.designsystem.RunnerTheme
 import com.example.core.presentation.designsystem.component.GradientBackground
 import com.example.core.presentation.designsystem.component.RunnerActionButton
+import com.example.core.presentation.designsystem.component.RunnerClickableText
 import com.example.core.presentation.designsystem.component.RunnerPasswordTextField
 import com.example.core.presentation.designsystem.component.RunnerTextField
 import com.example.core.presentation.ui.ObserveAsEvents
@@ -130,7 +130,7 @@ private fun RegisterScreen(
                     }
                 }
             }
-            ClickableText(text = annotatedString, onClick = { offset ->
+            RunnerClickableText(text = annotatedString, onClick = { offset ->
                 annotatedString.getStringAnnotations(
                     tag = "clickable_text", start = offset, end = offset
                 ).firstOrNull()?.let {

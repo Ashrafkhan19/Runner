@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,6 +32,7 @@ import com.example.core.presentation.designsystem.Poppins
 import com.example.core.presentation.designsystem.RunnerTheme
 import com.example.core.presentation.designsystem.component.GradientBackground
 import com.example.core.presentation.designsystem.component.RunnerActionButton
+import com.example.core.presentation.designsystem.component.RunnerClickableText
 import com.example.core.presentation.designsystem.component.RunnerPasswordTextField
 import com.example.core.presentation.designsystem.component.RunnerTextField
 import com.example.core.presentation.ui.ObserveAsEvents
@@ -169,7 +169,7 @@ private fun LoginScreen(
                     .weight(1f),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                ClickableText(
+                RunnerClickableText(
                     text = annotatedString,
                     onClick = { offset ->
                         annotatedString.getStringAnnotations(
