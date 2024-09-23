@@ -4,6 +4,7 @@ import android.app.Application
 import com.emir.runner.di.appModule
 import com.example.auth.presentation.di.authViewModelModule
 import com.example.core.data.di.coreDataModule
+import com.example.core.database.di.databaseModule
 import com.example.run.location.di.locationModule
 import com.example.run.presentation.di.runViewModelModule
 import di.authDataModule
@@ -34,6 +35,7 @@ class RunnerApp : Application() {
                 coreDataModule,
                 runViewModelModule,
                 locationModule,
+                databaseModule
             )
         }
     }
