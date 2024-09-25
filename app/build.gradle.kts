@@ -46,6 +46,7 @@ dependencies {
     implementation(projects.auth.data)
 
     implementation(projects.run.presentation)
+    implementation(projects.run.network)
     implementation(projects.run.data)
     implementation(projects.run.domain)
     implementation(projects.run.location)

@@ -83,32 +83,28 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
         startDestination = Route.RunOverview,
     ) {
         composable<Route.RunOverview> {
-            RunOverviewScreenRoot(
-                onStartRunClick = {
-                    navController.navigate(Route.ActiveRun)
-                }
-            )
+            RunOverviewScreenRoot(onStartRunClick = {
+                navController.navigate(Route.ActiveRun)
+            })
         }
 
-        composable<Route.ActiveRun>(
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "runner://active_run"
-                }
-            )
-        ) {
+        composable<Route.ActiveRun>(deepLinks = listOf(navDeepLink {
+            uriPattern = "runner://active_run"
+        })) {
             val context = LocalContext.current
-            ActiveRunScreenRoot(onServiceToggle = { shouldServiceRun ->
+            ActiveRunScreenRoot(
+                onBack = { navController.navigateUp() },
+                onFinish = { navController.navigateUp() },
+                onServiceToggle = { shouldServiceRun ->
 
-                if (shouldServiceRun) {
-                    context.startService(
-                        ActiveRunService.createStartIntent(
-                            context,
-                            MainActivity::class.java
+                    if (shouldServiceRun) {
+                        context.startService(
+                            ActiveRunService.createStartIntent(
+                                context, MainActivity::class.java
+                            )
                         )
-                    )
-                } else context.startService(ActiveRunService.createSopIntent(context))
-            })
+                    } else context.startService(ActiveRunService.createSopIntent(context))
+                })
         }
     }
 }

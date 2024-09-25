@@ -28,7 +28,7 @@ class RoomLocalRunDataSource(
             val entity = run.toRunEntity()
             runDao.upsertRun(entity)
             Result.Success(entity.id)
-        } catch (e: SQLiteFullException) {
+        } catch (_: SQLiteFullException) {
             Result.Error(DataError.Local.DISK_FULL)
         }
     }
