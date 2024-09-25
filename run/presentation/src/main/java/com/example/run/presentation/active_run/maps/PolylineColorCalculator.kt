@@ -36,11 +36,11 @@ object PolylineColorCalculator {
         colorEnd: Color
     ): Color {
         val ratio = ((speedKmh - minSpeed) / (maxSpeed - minSpeed)).coerceIn(0.0..1.0)
-        val colorInt = if (ratio < 0.5) {
+        val colorInt = if (ratio <= 0.5) {
             val midRation = ratio / 0.5
             ColorUtils.blendARGB(colorStart.toArgb(), colorMid.toArgb(), midRation.toFloat())
         } else {
-            val midToEndRatio = ratio - 0.5 / 0.5
+            val midToEndRatio = (ratio - 0.5) / 0.5
             ColorUtils.blendARGB(colorMid.toArgb(), colorEnd.toArgb(), midToEndRatio.toFloat())
         }
 

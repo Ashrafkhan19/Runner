@@ -5,6 +5,7 @@ import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -32,6 +33,7 @@ import com.example.core.presentation.designsystem.component.RunnerFloatingAction
 import com.example.core.presentation.designsystem.component.RunnerOutlinedActionButton
 import com.example.core.presentation.designsystem.component.RunnerScaffold
 import com.example.core.presentation.designsystem.component.RunnerToolbar
+import com.example.core.presentation.ui.ObserveAsEvents
 import com.example.run.presentation.R
 import com.example.run.presentation.active_run.component.RunDataCard
 import com.example.run.presentation.active_run.maps.TrackerMap
@@ -46,11 +48,39 @@ import java.io.ByteArrayOutputStream
 @Composable
 fun ActiveRunScreenRoot(
     viewModel: ActiveRunViewModel = koinViewModel(),
-    onServiceToggle: (Boolean) -> Unit
+    onServiceToggle: (Boolean) -> Unit,
+    onFinish: () -> Unit,
+    onBack: () -> Unit,
 ) {
+
+    val context = LocalContext.current
+
+    ObserveAsEvents(viewModel.events) { event ->
+        when (event) {
+            is ActiveRunEvent.Error -> Toast.makeText(
+                context,
+                event.error.asString(context),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            ActiveRunEvent.RunSaved -> onFinish()
+        }
+    }
+
     ActiveRunScreen(
         state = viewModel.state,
-        onAction = viewModel::onAction,
+        onAction = { action ->
+            when (action) {
+                is ActiveRunAction.OnBackClick -> {
+                    if (!viewModel.state.hasStartedRunning) {
+                        onBack()
+                    }
+                }
+
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        },
         onServiceToggle = onServiceToggle
 
     )
