@@ -1,4 +1,4 @@
-package com.example.core.domain.run;
+package com.example.core.domain.run
 
 import com.example.core.domain.util.DataError
 import com.example.core.domain.util.EmptyResult

@@ -1,4 +1,4 @@
-package com.example.run.presentation.active_run;
+package com.example.run.presentation.active_run
 
 import ActiveRunState
 import android.Manifest
