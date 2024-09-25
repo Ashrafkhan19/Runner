@@ -1,4 +1,4 @@
-package com.example.core.data.run;
+package com.example.core.data.run
 
 import com.example.core.database.dao.RunPendingSyncDao
 import com.example.core.database.mappers.toRun
@@ -50,8 +50,7 @@ class OfflineFirstRunRepository(
 
         val runWithId = run.copy(id = localResult.data)
         val remoteResult = remoteRunDataSource.postRun(
-            run = runWithId,
-            mapPicture = mapPicture
+            run = runWithId, mapPicture = mapPicture
         )
 
         return when (remoteResult) {
@@ -95,9 +94,7 @@ class OfflineFirstRunRepository(
                 runPendingSyncDao.getAllDeletedRunSyncEntities(userId)
             }
 
-            val createJobs = createdRuns
-                .await()
-                .map {
+            val createJobs = createdRuns.await().map {
                     launch {
                         val run = it.run.toRun()
                         when (remoteRunDataSource.postRun(run, it.mapPictureBytes)) {
@@ -110,9 +107,7 @@ class OfflineFirstRunRepository(
                         }
                     }
                 }
-            val deleteJobs = deletedRuns
-                .await()
-                .map {
+            val deleteJobs = deletedRuns.await().map {
                     launch {
                         when (remoteRunDataSource.deleteRun(it.runId)) {
                             is Result.Error -> Unit
