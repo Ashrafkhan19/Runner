@@ -33,3 +33,9 @@ fun Context.hasNotificationPermission(): Boolean {
         hasPermission(Manifest.permission.POST_NOTIFICATIONS)
     } else true
 }
+
+fun Context.hasForegroundSyncPermission(): Boolean {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        hasPermission(Manifest.permission.FOREGROUND_SERVICE_DATA_SYNC)
+    } else true
+}

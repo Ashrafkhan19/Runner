@@ -85,7 +85,15 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
         composable<Route.RunOverview> {
             RunOverviewScreenRoot(onStartRunClick = {
                 navController.navigate(Route.ActiveRun)
-            })
+            },
+                onLogOut = {
+                    navController.navigate(Route.Auth) {
+                        popUpTo(Route.Run) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         composable<Route.ActiveRun>(deepLinks = listOf(navDeepLink {
