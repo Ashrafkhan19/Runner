@@ -38,6 +38,7 @@ import com.example.run.presentation.R
 import com.example.run.presentation.active_run.component.RunDataCard
 import com.example.run.presentation.active_run.maps.TrackerMap
 import com.example.run.presentation.active_run.service.ActiveRunService
+import com.example.run.presentation.util.hasForegroundSyncPermission
 import com.example.run.presentation.util.hasLocationPermission
 import com.example.run.presentation.util.hasNotificationPermission
 import com.example.run.presentation.util.shouldShowLocationPermissionRationale
@@ -286,6 +287,7 @@ private fun ActivityResultLauncher<Array<String>>.requestRunnerPermissions(
 ) {
     val hasLocationPermission = context.hasLocationPermission()
     val hasNotificationPermission = context.hasNotificationPermission()
+    val hasForegroundSyncPermission = context.hasForegroundSyncPermission()
 
     val locationPermissions = arrayOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -295,13 +297,19 @@ private fun ActivityResultLauncher<Array<String>>.requestRunnerPermissions(
         arrayOf(Manifest.permission.POST_NOTIFICATIONS)
     } else arrayOf()
 
+    val foregroundDataSyncPermission =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            arrayOf(Manifest.permission.FOREGROUND_SERVICE_DATA_SYNC)
+        } else arrayOf()
+
     when {
-        !hasLocationPermission && !hasNotificationPermission -> {
-            launch(locationPermissions + notificationPermission)
+        !hasLocationPermission && !hasNotificationPermission && !hasForegroundSyncPermission -> {
+            launch(locationPermissions + notificationPermission + foregroundDataSyncPermission)
         }
 
         !hasLocationPermission -> launch(locationPermissions)
         !hasNotificationPermission -> launch(notificationPermission)
+        !hasForegroundSyncPermission -> launch(foregroundDataSyncPermission)
     }
 }
 
