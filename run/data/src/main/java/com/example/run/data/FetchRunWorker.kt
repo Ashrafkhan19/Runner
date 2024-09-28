@@ -11,7 +11,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.example.core.domain.run.RunRepository
-import kotlinx.coroutines.delay
 
 class FetchRunWorker(
     context: Context, params: WorkerParameters, private val runRepository: RunRepository
@@ -23,9 +22,7 @@ class FetchRunWorker(
 
         println("FetchRunWorker: $runAttemptCount")
 
-        setForeground(showNotification(context = this.applicationContext, "Emir", "emir java"))
-
-        delay(10000L)
+        setForegroundAsync(showNotification(context = this.applicationContext, "Emir", "emir java"))
 
         return when (val result = runRepository.fetchRuns()) {
             is com.example.core.domain.util.Result.Error -> result.error.toWorkerResult()

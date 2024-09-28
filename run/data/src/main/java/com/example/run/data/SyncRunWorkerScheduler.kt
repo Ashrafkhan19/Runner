@@ -104,7 +104,9 @@ class SyncRunWorkerScheduler(
 
         val workRequest = PeriodicWorkRequestBuilder<FetchRunWorker>(
             repeatInterval = interval.toJavaDuration()
-        ).setConstraints(Constraints(requiredNetworkType = NetworkType.CONNECTED))
+        ).setConstraints(
+            Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+        )
             .setBackoffCriteria(
                 backoffPolicy = BackoffPolicy.EXPONENTIAL, backoffDelay = 2L, timeUnit = SECONDS
             ).setInitialDelay(
