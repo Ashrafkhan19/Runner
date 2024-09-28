@@ -140,4 +140,5 @@ sealed interface Route {
 
     @Serializable
     data object ActiveRun : Route
+
 }
